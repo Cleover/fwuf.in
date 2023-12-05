@@ -12,7 +12,7 @@
         justify-content: center;
         height: 100vh;
         margin: 0;
-        font-family: 'Arial', sans-serif;
+        font-family: "Arial", sans-serif;
         background-color: #f5f5f5;
       }
 
@@ -31,16 +31,21 @@
   </head>
   <body>
     <h1>Fwuf.in Redirect</h1>
-    <p>Visit <a href="http://fwuf.in/urlhere">fwuf.in/urlhere</a> to be redirected to your URL automatically.</p>
+    <p>
+      Visit <a href="http://fwuf.in/#/urlhere">fwuf.in/#/urlhere</a> to be
+      redirected to your URL automatically.
+    </p>
 
     <script>
-      let url = window.location.href.substring(window.location.origin.length + 1);
-
-      if (url && !url.includes(window.location.origin)) {
-        if (url.includes("://")) {
-          window.open(url, "_self");
-        } else {
-          window.open("http://" + url, "_self");
+      let url = window.location.href.substring(window.location.origin.length);
+      if (url.startsWith("/#/")) {
+        url = url.substring(3);
+        if (url && !url.includes(window.location.origin)) {
+          if (url.includes("://")) {
+            window.open(url, "_self");
+          } else {
+            window.open("http://" + url, "_self");
+          }
         }
       }
     </script>
