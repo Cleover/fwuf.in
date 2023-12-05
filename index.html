@@ -27,6 +27,56 @@
         font-size: 1.2em;
         text-align: center;
       }
+
+      label {
+        padding-top: 1em;
+        color: #333;
+        font-size: 1.8em;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      #urlContainer {
+        display: flex;
+        align-items: center;
+        width: 80%;
+        margin-bottom: 10px;
+      }
+
+      #nonEditableText {
+        padding: 10px;
+        font-size: 1.3em;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        color: #4c4c4c;
+        background-color: #eee;
+        border: 2px solid #dcdbdb;
+        box-shadow: 2px 2px 2px #dcdcdc;
+      }
+
+      #urlInput {
+        flex: 1;
+        padding: 10px;
+        font-size: 1.3em;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border: 2px solid #dcdbdb;
+        box-shadow: 2px 2px 2px #dcdcdc;
+      }
+
+      #copyButton {
+        background-color: #93b694;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1em;
+        border-radius: 15px;
+        box-shadow: 2px 2px 2px #dcdcdc;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -36,7 +86,21 @@
       redirected to your URL automatically.
     </p>
 
+    <label for="urlContainer">Create your fwuf.in link:</label>
+    <div id="urlContainer">
+      <div id="nonEditableText">https://fwuf.in/#/</div>
+      <input type="text" id="urlInput" placeholder="Enter your URL here" />
+    </div>
+
+    <button id="copyButton" onclick="copyToClipboard()">Copy</button>
+
     <script>
+      function copyToClipboard() {
+        const urlInput = document.getElementById("urlInput");
+        let outputUrl = "https://fwuf.in/#/" + urlInput.value;
+        navigator.clipboard.writeText(outputUrl);
+      }
+
       let url = window.location.href.substring(window.location.origin.length);
       if (url.startsWith("/#/")) {
         url = url.substring(3);
