@@ -25,6 +25,14 @@ p {
   padding: 0 1em;
 }
 
+.large {
+  font-size: 6em;
+}
+
+.subheading {
+  font-size: 1.5em;
+}
+
 label {
   padding-top: 1.5em;
   color: #333;
