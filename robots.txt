@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /css/
+Disallow: /js/
+Disallow: /assets/
+
+Sitemap: https://fwuf.in/sitemap.xml
