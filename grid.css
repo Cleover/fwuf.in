@@ -11,7 +11,7 @@
 }
 
 #grid-2 {
-  position: fixed; /* Changed from absolute to fixed */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -19,23 +19,27 @@
   background: linear-gradient(rgba(0, 0, 0, 0.1) 1px, black 1px),
     linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, black 1px);
   background-size: 20px 20px;
-  clip-path: circle(10em at center);
+  clip-path: circle(0em at center);
   mix-blend-mode: multiply;
   z-index: 2;
+  opacity: 0;
+  transition: opacity 1s ease
 }
 
 .circle-cursor {
   position: absolute;
   top: 0;
   left: 0;
-  width: 20em;
-  height: 20em;
+  width: 0;
+  height: 0;
   border-radius: 50%;
   background-size: 20px 20px;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
   pointer-events: none;
   mix-blend-mode: exclusion;
+  opacity: 0;
+  transition: opacity 1s ease, width 1s ease, height 1s ease;
 }
 
 @media only screen and (max-width: 650px) {

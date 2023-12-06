@@ -25,15 +25,67 @@ if (url.startsWith("/#/")) {
   }
 }
 
+const cursor = document.querySelector(".circle-cursor");
+const grid_2 = document.querySelector("#grid-2");
+
+let mouseX = 0;
+let mouseY = 0;
+
+let delay = 6;
+let revisedMousePosX = 0;
+let revisedMousePosY = 0;
+let clipPathSize = 0;
+
+let shown = false;
+
 document.addEventListener("mousemove", function (e) {
-  const cursor = document.querySelector(".circle-cursor");
-  const grid_2 = document.querySelector("#grid-2");
+  if (!shown) {
+    revisedMousePosX = e.clientX;
+    revisedMousePosY = e.clientY;
 
-  const mouseX = e.clientX;
-  const mouseY = e.clientY;
-  cursor.style.left = `${mouseX}px`;
-  cursor.style.top = `${mouseY}px`;
+    grid_2.style.opacity = 1;
+    cursor.style.opacity = 1;
+    cursor.style.width = "20em";
+    cursor.style.height = "20em";
 
-  // make the grid-2 clip-path follow the cursor
-  grid_2.style.clipPath = `circle(10em at ${mouseX}px ${mouseY}px)`;
+    shown = true;
+
+    function easeInOutQuad(t) {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+    
+    let start = null;
+    const duration = 1000;
+    const targetSize = 9.6;
+    
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      const normalizedProgress = Math.min(progress / duration, 1);
+      clipPathSize = targetSize * easeInOutQuad(normalizedProgress);
+    
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      }
+    }
+    
+    window.requestAnimationFrame(step);
+    
+  }
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 });
+
+
+
+function delayMouseFollow() {
+  requestAnimationFrame(delayMouseFollow);
+
+  revisedMousePosX += (mouseX - revisedMousePosX) / delay;
+  revisedMousePosY += (mouseY - revisedMousePosY) / delay;
+
+  cursor.style.left = `${revisedMousePosX}px`;
+  cursor.style.top = `${revisedMousePosY}px`;
+  grid_2.style.clipPath = `circle(${clipPathSize}em at ${revisedMousePosX}px ${revisedMousePosY}px)`;
+}
+delayMouseFollow();
